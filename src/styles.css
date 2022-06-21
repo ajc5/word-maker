@@ -1,0 +1,7 @@
+body {
+  font-family: sans-serif;
+}
+
+#letters .item {
+  flex-grow: 1;
+}
