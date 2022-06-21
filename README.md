@@ -1,2 +1,2 @@
 # word-maker
-Created with CodeSandbox
+Learn words using letter auto-complete.
