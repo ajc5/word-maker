@@ -1,7 +1,77 @@
+html,
 body {
   font-family: sans-serif;
+  height: 100%;
+  overflow: hidden;
+}
+
+#header {
+  white-space: nowrap;
+}
+#words {
+  height: 20px;
+  white-space: nowrap;
+}
+
+#word {
+  background-color: seashell;
+  height: 90px;
+  text-align: center;
+  font-size: 5em;
+  cursor: pointer;
+}
+
+button {
+  font-size: 4em;
+  background-color: goldenrod;
+  vertical-align: center;
+}
+
+#letters {
+  align-content: flex-start;
+  padding: 0.5em;
+  height: 75%;
+  justify-content: center;
+  flex-wrap: wrap-reverse;
+  gap: 0.5em;
+  font-size: 1.3em;
 }
 
 #letters .item {
-  flex-grow: 1;
+  cursor: pointer;
+  background-color: lightsalmon;
+  padding: 0.6em;
+  font-size: 2em;
+  width: 40px;
+  text-align: center;
+  font-family: monospace;
+}
+
+@keyframes splash {
+  0% {
+    visibility: visible;
+    opacity: 100%;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes hoy {
+  from {
+    bottom: 0;
+  }
+  to {
+    bottom: 100%;
+    background-color: skyblue;
+  }
+}
+
+@keyframes wordImg {
+  from {
+    transform: scale(0, 0);
+  }
+  to {
+    transform: scale(1, 1);
+  }
 }
