@@ -54,7 +54,7 @@ var wordsets = {
   misc:
     "ball,bat,bed,book,boy,bun,can,cake,cap,car,cat,cow,cub,cup,dad,day,dog,doll,dust,fan,feet,girl,gun,hall,hat,hen,jar,kite,key,man,map,men,mom,pan,pet,pie,pig,pot,rat,son,sun,toe,tub,van,cab,dab,jab,lab,nab,tab,bat,cat,fat,hat,mat,pat,rat,sat,vat,gal,pal,gas,yak,wax,tax,bam,dam,ham,jam,ram,yam,cap,gap,lap,map,nap,rap,sap,tap,yap,bag,gag,hag,lag,nag,rag,sag,tag,wag,ban,can,fan,man,pan,ran,tan,van,bad,dad,had,lad,mad,pad,sad,tad",
   animals:
-    "animal,dog,cat,cow,bull,buffalo,kangaroo,bat,rat,sheep,goat,lion,tiger,elephant,rhino,zebra,donkey,pig,horse,monkey,snake,panda,koala,camel,bird,duck,chicken,hen,rooster,eagle,parrot,stork,fish,whale,dolphin,penguin,shark,walrus,toad,frog,turtle,tortoise,rabbit,hare,goose,swan,eel,shrimp,octopus,jellyfish,crab,scorpion,lizard,gecko,dinosaur,alligator,crocodile,squid,seahorse,flamingo",
+    "animal,dog,cat,cow,bull,buffalo,kangaroo,bat,rat,sheep,goat,lion,tiger,elephant,rhino,zebra,donkey,pig,horse,monkey,snake,panda,koala,camel,bird,duck,chicken,hen,rooster,eagle,parrot,stork,fish,whale,dolphin,penguin,shark,walrus,toad,frog,turtle,tortoise,rabbit,hare,goose,swan,eel,shrimp,octopus,jellyfish,crab,scorpion,lizard,gecko,dinosaur,alligator,crocodile,squid,seal,flamingo",
   body:
     "mouth,hand,leg,eye,ear,chin,cheek,head,neck,stomach,chest,teeth,tongue,nose,shoulder,knee,toe,finger,arm,elbow,thigh,calf,heel,foot,hair,nail,forehead,jaw,eyebrow,eyelash,eyelid,lips,nostril,arm",
   organs:
