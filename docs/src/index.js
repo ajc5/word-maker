@@ -51,6 +51,7 @@ body part by animal
 */
 
 var wordsets = {
+  threeLetters: "add,age,air,all,ant,ape,arm,art,ask,axe,bad,bat,bed,bee,big,box,bug,bye,car,cat,cog,cot,cow,cry,dad,day,dew,dim,dog,die,dig,dry,ear,eat,eel,egg,elf,eye,fat,fog,fox,gas,god,hat,hot,ice,ink,jam,kit,lid,lip,mat,mix,mud,nut,ox,out,pad,pat,pet,pit,put,",
   misc:
     "ball,bat,bed,book,boy,bun,can,cake,cap,car,cat,cow,cub,cup,dad,day,dog,doll,dust,fan,feet,girl,gun,hall,hat,hen,jar,kite,key,man,map,men,mom,pan,pet,pie,pig,pot,rat,son,sun,toe,tub,van,cab,dab,jab,lab,nab,tab,bat,cat,fat,hat,mat,pat,rat,sat,vat,gal,pal,gas,yak,wax,tax,bam,dam,ham,jam,ram,yam,cap,gap,lap,map,nap,rap,sap,tap,yap,bag,gag,hag,lag,nag,rag,sag,tag,wag,ban,can,fan,man,pan,ran,tan,van,bad,dad,had,lad,mad,pad,sad,tad",
   animals:
@@ -60,7 +61,7 @@ var wordsets = {
   organs:
     "heart,brain,lung,muscle,kidney,intestine,liver,pancreas,throat,windpipe,food pipe,rib,spine,backbone,skull"
 };
-var words = wordsets["animals"].toUpperCase().split(",");
+var words = wordsets["threeLetters"].toUpperCase().split(",");
 
 var wordTree = {},
   usedWordTree = {};
