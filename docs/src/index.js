@@ -56,7 +56,7 @@ body part by animal
 */
 
 var wordsets = {
-  threeLetters: "add,age,air,all,ant,ape,arm,art,ask,axe,bad,bat,bed,bee,big,box,bug,bye,car,cat,cog,cot,cow,cry,dad,day,dew,dim,dog,die,dig,dry,ear,eat,eel,egg,elf,eye,fat,fog,fox,gas,god,hat,hot,ice,ink,jam,kit,lid,lip,mat,mix,mud,nut,ox,out,pad,pat,pet,pit,put,",
+  threeLetters: "air,ant,ape,arm,axe,bat,bed,bee,box,bug,car,cat,cog,cot,cow,dad,day,dew,dog,ear,eel,egg,elf,eye,fog,fox,gas,god,hat,ice,ink,jam,kid,lid,lip,mat,mud,nut,ox,oaf,oak,pet,pit",
   colors: "red,white,black,green,blue,orange,purple,violet",
   days: "monday,tuesday,wednesday,thursday,friday,saturday,sunday",
   months: "january,february,march,april,may,june,july,august,september,december",
