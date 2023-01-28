@@ -1,32 +1,16 @@
-// BUG: doesn't work for words that are a subset (starting letters) of another word, eg, composite words
-//      - show letter with and without full-stop as two buttons.
-
-// Redo app - show full keyboard and disable letters that don't belong (rather than removing)
-//          - this way transition is not jarring and avoids mindless single letter selection pages
-
-// first screen => select from word sets (randomized order)
-
-// change shade of bg of letter for each time a letter is used
-// - encourage kids to try out all letters
-// - need this since used letters wont be removed unless all words are selected
-
 // dynamically select wordset and language
-// 1. fixed wordsets
-// 2. remote linked data wordsets
+// 1. fixed word sets
+// 2. wikidata linked words to create word sets (for image, text, translation)
+// 3. custom word sets
+// 4. languages - translate using wikidata
 
-// word sets
-
-// languages
+// use syllable letter-combos instead of just single letters
 
 // sentences
 
-// verb tenses
 
 // https://www.englishbix.com/three-letter-words-for-kids/
 
-var bgloop = document.getElementById("bgloop");
-bgloop.volume = 0.07;
-bgloop.play();
 /*
 var lastSeen;
 var loop = function () {
@@ -55,8 +39,18 @@ body part by animal
 
 */
 
+var wordDiv = document.getElementById("word");
+var wordImageDiv = document.getElementById("wordImage");
+var scoreDiv = document.getElementById("score");
+var wordsDiv = document.getElementById("words");
+var lettersDiv = document.getElementById("letters");
+var wordSetSelectorBtn = document.getElementById("wordSetSelector");
+var modalDiv = document.getElementById("modal");
+var modalContentDiv = document.querySelector("#modal .modal-content");
+var wordTree = {}, usedWordTree = {}, currLevel, currUsedLevel;
+
 var wordsets = {
-  threeLetters: "reeva,reya,air,ant,ape,arm,axe,bat,bed,bee,box,bug,car,cat,cog,cot,cow,dad,day,dew,dog,ear,eel,egg,elf,eye,fog,fox,gas,god,hat,ice,ink,jam,kid,lid,lip,mat,mud,nut,ox,oaf,oak,pet,pit",
+  three_letters: "air,aired,ant,ape,arm,axe,bat,bed,bee,box,bug,car,cat,cog,cot,cow,dad,day,dew,dog,ear,eel,egg,elf,eye,fog,fox,gas,god,hat,ice,ink,jam,kid,lid,lip,mat,mud,nut,ox,oaf,oak,pet,pit",
   colors: "red,white,black,green,blue,orange,purple,violet",
   days: "monday,tuesday,wednesday,thursday,friday,saturday,sunday",
   months: "january,february,march,april,may,june,july,august,september,december",
@@ -69,32 +63,43 @@ var wordsets = {
   organs:
     "heart,brain,lung,muscle,kidney,intestine,liver,pancreas,throat,windpipe,food pipe,rib,spine,backbone,skull"
 };
-var words = wordsets["threeLetters"].toUpperCase().split(",");
+var words, wordSet;
 
-var wordTree = {},
-  usedWordTree = {};
-words.forEach((word) => {
-  var tempWordTree = wordTree;
-  word.split("").forEach((letter) => {
-    if (!tempWordTree[letter]) {
-      tempWordTree[letter] = {};
-    }
-    tempWordTree = tempWordTree[letter];
+showWordSets()
+
+function showWordSets() {
+  modalDiv.style.display = "block"
+  modalContentDiv.innerHTML = Object
+  .keys(wordsets)
+  .map(set => `<input type="button" onclick="selectWordSet('${set}')" value="${set}"></input>`)
+  .join('<br><br>')
+}
+
+function selectWordSet(wordSetId) {
+  modalDiv.style.display = "none"
+  wordSetSelectorBtn.value = wordSetId
+  words = wordsets[wordSetId].toUpperCase().split(",");
+  wordSet = words.reduce((a, v) => ({ ...a, [v]: v}), {}) 
+  wordTree = {}
+  usedWordTree = {}
+  words.forEach((word) => {
+    var tempWordTree = wordTree;
+    word.split("").forEach((letter) => {
+      if (!tempWordTree[letter]) {
+        tempWordTree[letter] = {};
+      }
+      tempWordTree = tempWordTree[letter];
+    });
   });
-});
-
-var currLevel = wordTree,
+  currLevel = wordTree;
   currUsedLevel = usedWordTree;
-var wordDiv = document.getElementById("word");
-var scoreDiv = document.getElementById("score");
-var wordsDiv = document.getElementById("words");
-var lettersDiv = document.getElementById("letters");
-wordDiv.onclick = () => {
-  sayIt(wordDiv.innerText);
-};
-updateLetters();
+  wordDiv.onclick = () => {
+    sayIt(wordDiv.innerText);
+  };
+  updateUI();  
+}
 
-function updateLetters() {
+function updateUI() {
   lettersDiv.innerHTML = "";
   var letters = Object.keys(currLevel).sort();
   let pressed = false;
@@ -122,32 +127,33 @@ function updateLetters() {
       letterDiv.style.position = "relative";
       letterDiv.addEventListener("animationend", () => {
         wordDiv.innerText += currLetter;
-        updateLetters();
+        updateUI();
       });
     };
     lettersDiv.appendChild(letterDiv);
   }
-  if (letters.length === 0) {
-    scoreDiv.innerText =
-      parseInt(scoreDiv.innerText) + wordDiv.innerText.length;
+  if (letters.length === 0 || wordSet[wordDiv.innerText]) {
+    scoreDiv.innerText = parseInt(scoreDiv.innerText) + wordDiv.innerText.length;
     wordsDiv.innerHTML = wordDiv.innerText + " " + wordsDiv.innerText;
-    removeWord(wordTree, wordDiv.innerText, 0);
-    wordDiv.append(document.createElement("br"));
+    //removeWord(wordTree, wordDiv.innerText, 0);
+    //wordDiv.append(document.createElement("br"));
     var img = document.createElement("img");
-    img.src =
-      "https://source.unsplash.com/random/200x300/?" + wordDiv.innerText;
+    img.src = "https://source.unsplash.com/random/200x300/?" + wordDiv.innerText;
     img.style = "animation: wordImg 2.5s ease-in";
-    wordDiv.append(img);
+    wordImageDiv.append(img);
     sayIt(wordDiv.innerText);
     setTimeout(() => {
       var audio = new Audio("src/yay.mp3");
       audio.play();
-      setTimeout(() => {
-        wordDiv.innerHTML = "";
-        currLevel = wordTree;
-        currUsedLevel = usedWordTree;
-        updateLetters();
-      }, 4000);
+        setTimeout(() => {
+          wordImageDiv.innerHTML = "";
+          if (letters.length === 0) {
+            wordDiv.innerHTML = "";
+            currLevel = wordTree;
+            currUsedLevel = usedWordTree;
+            updateUI();
+          }
+        }, 4000);
     }, 1000);
   }
 }
@@ -156,6 +162,7 @@ function sayIt(text) {
   let utterance = new SpeechSynthesisUtterance(text.toLocaleLowerCase());
   speechSynthesis.speak(utterance);
 }
+/*
 function removeWord(subTree, word, index) {
   var currLetter = word[index];
   if (currLetter !== undefined) {
@@ -163,4 +170,11 @@ function removeWord(subTree, word, index) {
     if (Object.keys(subTree[currLetter]).length === 0)
       delete subTree[currLetter];
   }
+}
+*/
+
+function playBgm() {
+  var bgloop = document.getElementById("bgloop");
+  bgloop.volume = 0.07;
+  bgloop.play();
 }
