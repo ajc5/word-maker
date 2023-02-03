@@ -50,7 +50,7 @@ var modalContentDiv = document.querySelector("#modal .modal-content");
 var wordTree = {}, usedWordTree = {}, currLevel, currUsedLevel;
 
 var wordsets = {
-  three_letters: "air,aired,ant,ape,arm,axe,bat,bed,bee,box,bug,car,cat,cog,cot,cow,dad,day,dew,dog,ear,eel,egg,elf,eye,fog,fox,gas,god,hat,ice,ink,jam,kid,lid,lip,mat,mud,nut,ox,oaf,oak,pet,pit",
+  three_letters: "reya,air,aired,ant,ape,arm,axe,bat,bed,bee,box,bug,car,cat,cog,cot,cow,dad,day,dew,dog,ear,eel,egg,elf,eye,fog,fox,gas,god,hat,ice,ink,jam,kid,lid,lip,mat,mud,nut,ox,oaf,oak,pet,pit",
   colors: "red,white,black,green,blue,orange,purple,violet",
   days: "monday,tuesday,wednesday,thursday,friday,saturday,sunday",
   months: "january,february,march,april,may,june,july,august,september,december",
