@@ -1,6 +1,6 @@
 // dynamically select wordset and language
 // 1. fixed word sets
-// 2. wikidata linked words to create word sets (for image, text, translation)
+// 2. wikidata to get images of words
 // 3. custom word sets
 // 4. languages - translate using wikidata
 
@@ -45,27 +45,33 @@ var scoreDiv = document.getElementById("score");
 var wordsDiv = document.getElementById("words");
 var lettersDiv = document.getElementById("letters");
 var wordSetSelectorBtn = document.getElementById("wordSetSelector");
+var customWordSetSpan = document.getElementById("customWordSet");
 var modalDiv = document.getElementById("modal");
 var modalContentDiv = document.querySelector("#modal .modal-content");
 var wordTree = {}, usedWordTree = {}, currLevel, currUsedLevel;
 
 var wordsets = {
-  three_letters: "reya,air,aired,ant,ape,arm,axe,bat,bed,bee,box,bug,car,cat,cog,cot,cow,dad,day,dew,dog,ear,eel,egg,elf,eye,fog,fox,gas,god,hat,ice,ink,jam,kid,lid,lip,mat,mud,nut,ox,oaf,oak,pet,pit",
-  colors: "red,white,black,green,blue,orange,purple,violet",
-  days: "monday,tuesday,wednesday,thursday,friday,saturday,sunday",
-  months: "january,february,march,april,may,june,july,august,september,december",
-  misc:
-    "ball,bat,bed,book,boy,bun,can,cake,cap,car,cat,cow,cub,cup,dad,day,dog,doll,dust,fan,feet,girl,gun,hall,hat,hen,jar,kite,key,man,map,men,mom,pan,pet,pie,pig,pot,rat,son,sun,toe,tub,van,cab,dab,jab,lab,nab,tab,bat,cat,fat,hat,mat,pat,rat,sat,vat,gal,pal,gas,yak,wax,tax,bam,dam,ham,jam,ram,yam,cap,gap,lap,map,nap,rap,sap,tap,yap,bag,gag,hag,lag,nag,rag,sag,tag,wag,ban,can,fan,man,pan,ran,tan,van,bad,dad,had,lad,mad,pad,sad,tad",
-  animals:
-    "animal,dog,cat,cow,bull,buffalo,kangaroo,bat,rat,sheep,goat,lion,tiger,elephant,rhino,zebra,donkey,pig,horse,monkey,snake,panda,koala,camel,bird,duck,chicken,hen,rooster,eagle,parrot,stork,fish,whale,dolphin,penguin,shark,walrus,toad,frog,turtle,tortoise,rabbit,hare,goose,swan,eel,shrimp,octopus,jellyfish,crab,scorpion,lizard,gecko,dinosaur,alligator,crocodile,squid,seal,flamingo",
-  body:
-    "mouth,hand,leg,eye,ear,chin,cheek,head,neck,stomach,chest,teeth,tongue,nose,shoulder,knee,toe,finger,arm,elbow,thigh,calf,heel,foot,hair,nail,forehead,jaw,eyebrow,eyelash,eyelid,lips,nostril,arm",
-  organs:
-    "heart,brain,lung,muscle,kidney,intestine,liver,pancreas,throat,windpipe,food pipe,rib,spine,backbone,skull"
-};
+  three_letters: "ant,arm,axe,bag,bat,bed,bee,bun,box,boy,bug,cap,can,car,cat,cow,cup,dad,day,dog,ear,egg,eye,fan,fox,god,hat,ice,jam,jar,key,mat,man,map,nut,pan,pig,pot,rat,sun,toe,tub,van",
+  four_letters: "ball,book,papa,mama,kite,girl,foot,dust,doll,cake",
+  colors: "black,blue,green,orange,purple,red,violet,white,yellow",
+  days: "friday,monday,saturday,sunday,thursday,tuesday,wednesday",
+  months: "april,august,december,february,january,july,june,march,may,september",
+  animals: "bird,bull,cat,cow,crab,dog,duck,eagle,fish,frog,goat,goose,horse,koala,lion,panda,pig,rat,seal,sheep,snake,stork,swan,tiger,toad,whale,zebra",
+  body: "arm,cheek,chin,ear,elbow,eye,finger,foot,hand,head,heel,jaw,knee,leg,lip,mouth,neck,nail,nose,shoulder,stomach,teeth,thigh,tongue,toe",
+  organs: "brain,heart,intestine,kidney,liver,lung,pancreas,skin"
+  };
+var customWordSet = ""
 var words, wordSet;
 
 showWordSets()
+
+function addWord() {
+  let customWord = document.getElementById("customWord").value
+  customWordSet += "," + customWord;
+  customWordSetSpan.innerHTML = customWordSet;
+  document.getElementById("customWord").value = "";
+  selectWordSet(wordSetSelectorBtn.value);
+}
 
 function showWordSets() {
   modalDiv.style.display = "block"
@@ -76,9 +82,10 @@ function showWordSets() {
 }
 
 function selectWordSet(wordSetId) {
+  wordDiv.innerHTML = ""
   modalDiv.style.display = "none"
   wordSetSelectorBtn.value = wordSetId
-  words = wordsets[wordSetId].toUpperCase().split(",");
+  words = (wordsets[wordSetId] + customWordSet).toUpperCase().split(",");
   wordSet = words.reduce((a, v) => ({ ...a, [v]: v}), {}) 
   wordTree = {}
   usedWordTree = {}

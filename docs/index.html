@@ -26,7 +26,10 @@
     </audio>
     <div id="header">
       <input id="wordSetSelector" type="button" onclick="showWordSets()" value="Word Set Selector"></input>
+      <input id="customWord" onkeypress="if (event.keyCode === 13) addWord()" type="text"></input>
+      <input type="button" onclick="addWord()" value="Add word"></input>
       <span id="score">0</span>
+      <span id="customWordSet" style="background: cyan"></span>
       <span id="words"></span>
     </div>
     <div id="word"></div>
